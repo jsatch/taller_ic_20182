@@ -50,7 +50,7 @@ var onServicioDevuelto = function(evt){
 var obtenerTODOs = function(){
   // Nos vamos a comunicar con un servicio
   var req = new XMLHttpRequest();
-  var url = "http://127.0.0.1:8000/todos/list";
+  var url = "http://127.0.0.1:8000/todos/list/";
   req.open("GET", url, true);  //asincrona
   req.onreadystatechange = onServicioDevuelto;
   req.send();
