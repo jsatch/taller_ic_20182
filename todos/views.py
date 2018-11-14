@@ -6,21 +6,14 @@ from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 def load_todos(request):
-    todos_list = Todo.objects.all()
-    json_respuesta = []
-    for todo in todos_list:
-        json_respuesta.append({
-            "id": todo.id,
-            "texto": todo.texto
-        })
+    json_respuesta = listar()
+    
     return HttpResponse(json.dumps(json_respuesta))
 
 @csrf_exempt
 def add_todo(request):
     json_request = json.loads(request.body.decode('utf-8'))
-    todo = Todo()
-    todo.texto = json_request["texto"]
-    todo.save()
+    agregar_todo(json_request)
     return HttpResponse(json.dumps({"msg": "OK"}))
 
 def delete_todo(request):
@@ -31,3 +24,23 @@ def delete_todo(request):
 
 def index(request):
     return render(request, 'index.html', None)
+
+def listar():
+    todos_list = Todo.objects.all()
+    json_respuesta = []
+    for todo in todos_list:
+        json_respuesta.append({
+            "id": todo.id,
+            "texto": todo.texto
+        })
+    return json_respuesta
+
+def agregar_todo(js_req):
+    todo = Todo()
+    todo.texto = js_req["texto"]
+    todo.save()
+
+
+
+
+#
